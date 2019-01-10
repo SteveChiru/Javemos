@@ -39,22 +39,7 @@ hs_err_pid*
 .mymetadata
 /src/main/webapp/WEB-INF/classes
 .idea/
-/ProductManage/*/target/
-/service-meta/*/target/
-/service-collector/collector-api/target/
-/service-collector/collector-dao/target/
-/service-collector/collector-service/target/
-/service-collector/collector-web/target/
-/service-collector/collector-scripts/target/
-/service-collector/es-api/target/
-/service-collector/es-service/target/
-/service-collector/es-web/target/
-/openapi-edit/*/target/
+
 *.iml
-/service-collector/collector-service/logs/
-openapi-edit/edit-service/logs/
-/service-es/logs/
-/service-es/es-api/target/
-/service-es/es-service/target/
-/service-es/es-web/target/
+ProductManage/target
 
