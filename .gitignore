@@ -39,7 +39,7 @@ hs_err_pid*
 .mymetadata
 /src/main/webapp/WEB-INF/classes
 .idea/
-/service-editor/*/target/
+/ProductManage/*/target/
 /service-meta/*/target/
 /service-collector/collector-api/target/
 /service-collector/collector-dao/target/
