@@ -25,4 +25,9 @@ public class CategoryServlet extends HttpServlet {
         outputStream.write(dataByteArr);
         logger.info("CategoryServlet的doGet方法执行完毕");
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
 }
