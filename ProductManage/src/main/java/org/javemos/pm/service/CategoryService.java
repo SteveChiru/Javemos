@@ -1,4 +1,4 @@
-package org.javemos.pm.dao;
+package org.javemos.pm.service;
 
 import org.javemos.pm.domain.Category;
 
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Description:
  */
-public interface CategoryDao {
+public interface CategoryService {
     public void addCategory(Category c) throws SQLException;
     public void delCategoryByCid(Integer cid) throws SQLException;
     public void updateCategory(Category c) throws SQLException;

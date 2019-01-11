@@ -63,4 +63,16 @@ public class Product implements Serializable {
     public void setCategoryid(Integer categoryid) {
         this.categoryid = categoryid;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "pid=" + pid +
+                ", pname='" + pname + '\'' +
+                ", price=" + price +
+                ", path='" + path + '\'' +
+                ", pdescription='" + pdescription + '\'' +
+                ", categoryid=" + categoryid +
+                '}';
+    }
 }
