@@ -106,7 +106,7 @@ public class ProductServlet extends HttpServlet {
 
             ProductService service = new ProductServiceImpl();
             service.addProduct(p);
-            setMsg(req, resp, "添加商品成功！<a href='"+req.getContextPath()+"/manage/addProduct.jsp'>继续添加</a>");
+            setMsg(req, resp, "添加商品成功！<a href='"+req.getContextPath()+"/pages/addProduct.jsp'>继续添加</a>");
             return;
 
 
