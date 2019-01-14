@@ -1,5 +1,7 @@
 package org.javemos.pm.web.servlet;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -35,8 +37,128 @@ public class ProductServlet extends HttpServlet {
         String op = req.getParameter("op");
         if ("add".equals(op)){
             addProduct(req,resp);
+        }else if("find".equals(op)){
+            String cid = req.getParameter("categoryid");
+            if ("".equals(cid)){
+                findProduct(req,resp);
+            }else {
+                findProductByCategory(req,resp,cid);
+            }
+        }else if ("del".equals(op)){
+            delProduct(req,resp);
+        }else if ("delMulti".equals(op)){
+            delMultiProduct(req,resp);
+        }else if ("findById".equals(op)){
+            findProductById(req,resp);
+        }else if ("edit".equals(op)){
+            updateProduct(req,resp);
         }
 
+    }
+
+    private void updateProduct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            //获取数据并且封装数据
+            Product p = new Product();
+            BeanUtils.populate(p, req.getParameterMap());
+
+            ProductService service = new ProductServiceImpl();
+            service.updateProduct(p);
+
+            resp.getWriter().print("success");
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.getWriter().print("error");
+        }
+    }
+
+    private void findProductById(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            //获取要查询的商品id
+            String id = req.getParameter("pid");
+            Integer pid = new Integer(id);
+
+            ProductService service = new ProductServiceImpl();
+            Product p = service.findProductById(pid);
+
+            //将商品对象转换成json格式
+            JSONObject jsonObject = JSONObject.fromObject(p);
+            resp.getWriter().print(jsonObject.toString());
+
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void delMultiProduct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            //获取要删除的商品id
+            String pids = req.getParameter("pids");
+            ProductService service = new ProductServiceImpl();
+            service.delMultiProduct(pids);
+
+            resp.getWriter().print("success");
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.getWriter().print("error");
+        }
+    }
+
+    private void delProduct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            //获取要删除的商品id
+            String id = req.getParameter("pid");
+            Integer pid = new Integer(id);
+
+            ProductService service = new ProductServiceImpl();
+            service.delProduct(pid);
+
+            resp.getWriter().print("success");
+            return;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+            resp.getWriter().print("error");
+            return;
+        }
+    }
+
+    private void findProductByCategory(HttpServletRequest req, HttpServletResponse resp, String cid) {
+        try {
+            Integer categoryid = new Integer(cid);
+            ProductService service = new ProductServiceImpl();
+            List<Product> ps = service.findProductByCategory(categoryid);
+
+            JSONArray jsonArray = JSONArray.fromObject(ps);
+            resp.getWriter().println(jsonArray.toString());
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void findProduct(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            //获取所有的商品信息
+            ProductService service = new ProductServiceImpl();
+            List<Product> ps = service.findProduct();
+            //将所有的商品信息转换成json格式数据
+            JSONArray jsonArray = JSONArray.fromObject(ps);
+            resp.getWriter().println(jsonArray.toString());
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void addProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

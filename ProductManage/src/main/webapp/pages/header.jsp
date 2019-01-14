@@ -20,7 +20,7 @@
     &nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/pages/addProduct.jsp">添加商品</a>
     &nbsp;&nbsp;
-    <a>查询商品</a>
+    <a href="${pageContext.request.contextPath}/pages/listProduct.jsp">查询商品</a>
 
     <br />
     <hr />
