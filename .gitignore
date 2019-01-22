@@ -5,12 +5,6 @@
 *.log
 */logs
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 #*.jar
 *.war
@@ -19,6 +13,13 @@
 *.zip
 *.tar.gz
 *.rar
+*/target
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -42,5 +43,5 @@ hs_err_pid*
 .idea/
 
 *.iml
-ProductManage/target
+
 
