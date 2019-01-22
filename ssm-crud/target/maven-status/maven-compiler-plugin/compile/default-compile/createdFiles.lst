@@ -1,11 +1,2 @@
-org\javemos\ssmcrud\pojo\BaseDict.class
-org\javemos\ssmcrud\service\BaseDictService.class
-org\javemos\ssmcrud\dao\CustomerDao.class
-org\javemos\ssmcrud\service\CustomerService.class
-org\javemos\ssmcrud\dao\BaseDictDao.class
-org\javemos\ssmcrud\service\impl\BaseDictServiceImpl.class
 org\javemos\ssmcrud\pojo\Customer.class
-org\javemos\ssmcrud\utils\Page.class
-org\javemos\ssmcrud\service\impl\CustomerServiceImpl.class
 org\javemos\ssmcrud\controller\CustomerController.class
-org\javemos\ssmcrud\pojo\QueryVo.class

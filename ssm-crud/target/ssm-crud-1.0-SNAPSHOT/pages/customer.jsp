@@ -263,9 +263,6 @@
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="col-md-12 text-right">
-							<itcast:page url="${pageContext.request.contextPath }/customer/list.action" />
-						</div>
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
