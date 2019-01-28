@@ -17,7 +17,7 @@
             <option value="">--请选择--</option>
        </select>
        <label>所属行业</label>
-       <select id="custIndustory" name="custIndustory">
+       <select id="custIndustry" name="custIndustory">
             <option value="">--请选择--</option>
        </select>
        <label>客户级别</label>
@@ -57,6 +57,34 @@
 
     <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript">
+        //加载初始化的字典数据到下拉列表
+        function loadDictData() {
+            $.ajax({
+                type:"get",
+                url:"http://localhost:8080/dict/load.action",
+                success:function (data) {
+                    // alert("加载字典数据");
+                    //添加客户来源数据
+                    var custSourceList = data.custSourceInit;
+                    for (var i = custSourceList.length - 1; i >= 0; i--) {
+                        $("#customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
+                     };
+
+                    //添加客户行业数据
+                    var custIndustryList = data.custIndustryInit;
+                    for (var i = custIndustryList.length - 1; i >= 0; i--) {
+                        $("#custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
+                    };
+
+                    //添加客户等级数据
+                    var custLevelList = data.custLevelInit;
+                    for (var i = custLevelList.length - 1; i >= 0; i--) {
+                        $("#custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
+                    };
+                }
+            });
+        }
+
         //获取所有客户的信息
         function getAllCustomers(){
             //alert("获得所有用户信息");
@@ -64,15 +92,18 @@
                 type:"get",
                 url:"http://localhost:8080/customer/list.action",
                 success:function (data) {
-                   alert("获得用户信息待处理");
+                   // alert("获得用户信息待处理");
+
                 }
             });
         }
 
         //页面加载完要执行的方法
         $(function () {
+            loadDictData();
             getAllCustomers();
         });
+
     </script>
 </body>
 </html>
