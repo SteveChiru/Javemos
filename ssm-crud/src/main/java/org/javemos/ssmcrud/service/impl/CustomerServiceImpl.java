@@ -5,6 +5,7 @@ import org.javemos.ssmcrud.dao.CustomerDao;
 import org.javemos.ssmcrud.pojo.Customer;
 import org.javemos.ssmcrud.pojo.QueryVo;
 import org.javemos.ssmcrud.service.CustomerService;
+import org.javemos.ssmcrud.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
 
     @Override
-    public List<Customer> getCustomerList(QueryVo queryVo) {
+    public Page<Customer> getCustomerList(QueryVo queryVo) {
         return null;
     }
 

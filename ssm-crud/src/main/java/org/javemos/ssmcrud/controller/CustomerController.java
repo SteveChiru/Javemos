@@ -1,15 +1,25 @@
 package org.javemos.ssmcrud.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.javemos.ssmcrud.pojo.BaseDict;
 import org.javemos.ssmcrud.pojo.Customer;
+import org.javemos.ssmcrud.pojo.QueryVo;
+import org.javemos.ssmcrud.service.BaseDictService;
 import org.javemos.ssmcrud.service.CustomerService;
+import org.javemos.ssmcrud.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description:
@@ -23,21 +33,10 @@ public class CustomerController {
 
     @RequestMapping("/customer/list")
     @ResponseBody
-    public List<Customer> getAllCustomers(){
-        List<Customer> customerList = new ArrayList<>();
+    public Page<Customer> showCustomerList(){
+        Page<Customer> page = new Page<>();
 
-        Customer cust1 = new Customer();
-        cust1.setCust_name("小明");
-        cust1.setCust_id(1L);
-
-        Customer cust2 = new Customer();
-        cust2.setCust_name("小刚");
-        cust2.setCust_id(2L);
-
-        customerList.add(cust1);
-        customerList.add(cust2);
-
-        return customerList;
+        return page;
     }
 
     @RequestMapping("/customer/edit")
