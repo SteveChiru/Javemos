@@ -15,6 +15,9 @@
 *.rar
 */target
 
+# test files
+*/src/test
+
 # BlueJ files
 *.ctxt
 
