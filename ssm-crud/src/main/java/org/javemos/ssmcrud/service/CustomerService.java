@@ -10,4 +10,6 @@ import org.javemos.ssmcrud.utils.PageResult;
  */
 public interface CustomerService {
     public PageResult getCustomerList(int pageNum,int pageSize);
+    public Customer getCustomerById(Long id);
+    public void updateCustomer(Customer customer);
 }

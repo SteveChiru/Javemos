@@ -31,4 +31,17 @@ public class CustomerServiceImpl implements CustomerService {
 		return new PageResult(page.getTotal(),page.getResult());
 	}
 
+	@Override
+	public Customer getCustomerById(Long id) {
+		logger.info("进入服务层-CustomerServiceImpl-getCustomerById方法");
+		Customer customer = customerDao.getCustomerById(id);
+		return customer;
+	}
+
+	@Override
+	public void updateCustomer(Customer customer) {
+		logger.info("进入服务层-CustomerServiceImpl-updateCustomer方法");
+		customerDao.updateCustomer(customer);
+	}
+
 }

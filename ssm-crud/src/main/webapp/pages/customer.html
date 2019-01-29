@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<>
     <meta charset="UTF-8">
     <title>CRM-客户关系管理</title>
+
+    <link rel="stylesheet"  href="../css/bootstrap.min.css">
+    <link rel="stylesheet"  href="../css/dataTables.bootstrap.css">
 </head>
 <body>
     <!--查询栏-->
@@ -52,13 +55,76 @@
 
     <!--修改对话框-->
     <div class="modal fade" id="customerEditDialog" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
-        <div role="document">
-            修改客户信息
-        </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">修改客户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="edit_customer_form">
+                        <input type="hidden" id="edit_cust_id" name="cust_id"/>
+                        <div class="form-group">
+                            <label for="edit_customerName" style="float:left;padding:7px 15px 0 27px;">客户名称</label>
+                            <input type="text" id="edit_customerName" placeholder="客户名称" name="cust_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_customerFrom" style="float:left;padding:7px 15px 0 27px;">客户来源</label>
+                            <select id="edit_customerFrom" name="cust_source">
+                                <option value="">--请选择--</option>
 
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_custIndustry" style="float:left;padding:7px 15px 0 27px;">所属行业</label>
+                            <select id="edit_custIndustry"  name="cust_industry">
+                                <option value="">--请选择--</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_custLevel" style="float:left;padding:7px 15px 0 27px;">客户级别</label>
+                            <select id="edit_custLevel" name="cust_level">
+                                <option value="">--请选择--</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_linkMan" style="float:left;padding:7px 15px 0 27px;">联系人</label>
+                            <input type="text" id="edit_linkMan" placeholder="联系人" name="cust_linkman">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_phone" style="float:left;padding:7px 15px 0 27px;">固定电话</label>
+                            <input type="text" id="edit_phone" placeholder="固定电话" name="cust_phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_mobile" style="float:left;padding:7px 15px 0 27px;">移动电话</label>
+                            <input type="text" id="edit_mobile" placeholder="移动电话" name="cust_mobile">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_zipcode" style="float:left;padding:7px 15px 0 27px;">邮政编码</label>
+                            <input type="text" id="edit_zipcode" placeholder="邮政编码" name="cust_zipcode">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_address" style="float:left;padding:7px 15px 0 27px;">联系地址</label>
+                            <input type="text" id="edit_address" placeholder="联系地址" name="cust_address">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="updateCustomer()">保存修改</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         //加载初始化的字典数据到下拉列表
         function loadDictData() {
@@ -71,18 +137,21 @@
                     var custSourceList = data.custSourceInit;
                     for (var i = custSourceList.length - 1; i >= 0; i--) {
                         $("#customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
-                     };
+                        $("#edit_customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
+                    };
 
                     //添加客户行业数据
                     var custIndustryList = data.custIndustryInit;
                     for (var i = custIndustryList.length - 1; i >= 0; i--) {
                         $("#custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
+                        $("#edit_custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
                     };
 
                     //添加客户等级数据
                     var custLevelList = data.custLevelInit;
                     for (var i = custLevelList.length - 1; i >= 0; i--) {
                         $("#custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
+                        $("#edit_custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
                     };
                 }
             });
@@ -108,11 +177,43 @@
                             "<td>"+customers[i].cust_phone+"</td>" +
                             "<td>"+customers[i].cust_mobile+"</td>" +
                             "<td>"+customers[i].cust_createtime+"</td>" +
-                            '<td><a href="#" data-toggle="modal" data-target="#customerEditDialog">修改</a>&nbsp&nbsp<a href="#" >删除</a></td>' +
+                            '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
+                            '<button class="btn btn-primary btn-lg" >删除</button></td>' +
                             "</tr>")
                     }
 
                 }
+            });
+        }
+
+        <!--点击修改按钮-->
+        function editCustomer(id){
+            // alert(id);
+            $.ajax({
+                type:"get",
+                url:"http://localhost:8080/customer/edit.action",
+                data:{"id":id},
+                success:function(data) {
+                    $("#edit_cust_id").val(data.cust_id);
+                    $("#edit_customerName").val(data.cust_name);
+                    $("#edit_customerFrom").val(data.cust_source)
+                    $("#edit_custIndustry").val(data.cust_industry)
+                    $("#edit_custLevel").val(data.cust_level)
+                    $("#edit_linkMan").val(data.cust_linkman);
+                    $("#edit_phone").val(data.cust_phone);
+                    $("#edit_mobile").val(data.cust_mobile);
+                    $("#edit_zipcode").val(data.cust_zipcode);
+                    $("#edit_address").val(data.cust_address);
+                }
+            });
+        }
+
+        <!--修改完客户信息后保存按钮-->
+        function updateCustomer(){
+            // alert($("#edit_customer_form").serialize());
+            $.post("http://localhost:8080/customer/update.action",$("#edit_customer_form").serialize(),function(data){
+                alert("客户信息更新成功！");
+                window.location.reload();
             });
         }
 

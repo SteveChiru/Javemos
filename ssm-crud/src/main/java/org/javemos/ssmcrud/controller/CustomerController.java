@@ -8,6 +8,7 @@ import org.javemos.ssmcrud.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -31,7 +32,15 @@ public class CustomerController {
     @ResponseBody
     public Customer getCustomerById(Long id) {
         logger.info("进入CustomerController中的getCustomerById方法");
-        return null;
+		Customer customer = customerService.getCustomerById(id);
+		return customer;
     }
 
+    @RequestMapping(value = "/customer/update",method = RequestMethod.POST)
+	@ResponseBody
+	public String updateCustomer(Customer customer){
+    	logger.info("进入CustomerController中的updateController方法");
+    	customerService.updateCustomer(customer);
+    	return "OK";
+	}
 }

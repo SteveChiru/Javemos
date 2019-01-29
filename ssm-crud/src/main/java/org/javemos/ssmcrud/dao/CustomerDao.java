@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface CustomerDao {
    public List<Customer> getCustomerList();
+   public Customer getCustomerById(Long id);
+   public void updateCustomer(Customer customer);
 }
