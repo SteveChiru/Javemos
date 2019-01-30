@@ -5,7 +5,25 @@
 <mapper namespace="org.javemos.ssmcrud.dao.CustomerDao">
 
     <select id="getCustomerList" resultType="org.javemos.ssmcrud.pojo.Customer">
-        SELECT * FROM customer
+        SELECT
+            a.cust_id,
+            a.cust_name,
+            a.cust_user_id,
+            a.cust_create_id,
+            b.dict_item_name cust_source,
+            c.dict_item_name cust_industry,
+            d.dict_item_name cust_level,
+            a.cust_linkman,
+            a.cust_phone,
+            a.cust_mobile,
+            a.cust_zipcode,
+            a.cust_address,
+            a.cust_createtime
+        FROM
+            customer a
+            LEFT JOIN base_dict b ON a.cust_source = b.dict_id
+            LEFT JOIN base_dict c ON a.cust_industry = c.dict_id
+            LEFT JOIN base_dict d ON a.cust_level = d.dict_id
     </select>
     
     <select id="getCustomerById" resultType="org.javemos.ssmcrud.pojo.Customer" parameterType="long">
