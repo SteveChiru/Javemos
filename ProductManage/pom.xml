@@ -9,69 +9,82 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <properties>
+        <servletApi.version>2.5</servletApi.version>
+        <jspApi.version>2.1</jspApi.version>
+        <jstl.version>1.2</jstl.version>
+        <log4j.version>1.2.13</log4j.version>
+        <c3p0.version>0.9.5.3</c3p0.version>
+        <dbutils.version>1.3</dbutils.version>
+        <fileupload.version>1.3.3</fileupload.version>
+        <beanutils.version>1.9.3</beanutils.version>
+        <jsonlib.version>2.4</jsonlib.version>
+        <mysqlConnectorJava.version>5.1.46</mysqlConnectorJava.version>
+    </properties>
+
     <dependencies>
         <!-- servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>${servletApi.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--jsp-->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>${jspApi.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--jstl-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
         <!--log4j-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.13</version>
+            <version>${log4j.version}</version>
         </dependency>
         <!--C3P0连接池-->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.5.2</version>
+            <version>${c3p0.version}</version>
         </dependency>
         <!--org.apache.commons.dbutils-->
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
-            <version>1.3</version>
+            <version>${dbutils.version}</version>
         </dependency>
         <!--org.apache.commons.fileupload-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>[1.3.3,)</version>
+            <version>${fileupload.version}</version>
         </dependency>
         <!--org.apache.commons.beanutils-->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
+            <version>${beanutils.version}</version>
         </dependency>
         <!--net.sf.json.JSONArray-->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
-            <version>2.4</version>
+            <version>${jsonlib.version}</version>
             <classifier>jdk15</classifier>
         </dependency>
         <!--com.mysql.jdbc.Driver-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.46</version>
+            <version>${mysqlConnectorJava.version}</version>
         </dependency>
     </dependencies>
 
