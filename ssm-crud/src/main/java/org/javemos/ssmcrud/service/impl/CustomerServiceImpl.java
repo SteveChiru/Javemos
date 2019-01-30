@@ -5,13 +5,11 @@ import com.github.pagehelper.PageHelper;
 import org.apache.log4j.Logger;
 import org.javemos.ssmcrud.dao.CustomerDao;
 import org.javemos.ssmcrud.pojo.Customer;
-import org.javemos.ssmcrud.pojo.QueryVo;
 import org.javemos.ssmcrud.service.CustomerService;
 import org.javemos.ssmcrud.utils.PageResult;
+import org.javemos.ssmcrud.utils.QueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Description:
@@ -24,10 +22,10 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
 
 	@Override
-	public PageResult getCustomerList(int pageNum,int pageSize) {
+	public PageResult getCustomerList(QueryVo queryVo) {
 		logger.info("进入服务层-CustomerServiceImpl-getCustomerList方法");
-		PageHelper.startPage(pageNum,pageSize);
-		Page<Customer> page = (Page<Customer>) customerDao.getCustomerList();
+		PageHelper.startPage(queryVo.getPage(),queryVo.getRows());
+		Page<Customer> page = (Page<Customer>) customerDao.getCustomerList(queryVo);
 		return new PageResult(page.getTotal(),page.getPages(),page.getResult());
 	}
 

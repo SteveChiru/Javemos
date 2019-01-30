@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.javemos.ssmcrud.pojo.Customer;
 import org.javemos.ssmcrud.service.CustomerService;
 import org.javemos.ssmcrud.utils.PageResult;
+import org.javemos.ssmcrud.utils.QueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +24,9 @@ public class CustomerController {
 
     @RequestMapping("/customer/list")
     @ResponseBody
-    public PageResult showCustomerList(int page,int rows){
+    public PageResult showCustomerList(QueryVo queryVo){
     	logger.info("进入CustomerController中的showCustomerList方法");
-        return customerService.getCustomerList(page,rows);
+        return customerService.getCustomerList(queryVo);
     }
 
     @RequestMapping("/customer/edit")

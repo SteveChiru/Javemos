@@ -3,8 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.javemos.ssmcrud.dao.CustomerDao">
+    <sql id="customer_list_where">
+        <where>
+            <if test="custName !=null and custName != ''">
+                and cust_name LIKE '%${custName}%'
+            </if>
+            <if test="custSource !=null and custSource != ''">
+                AND cust_source = #{custSource}
+            </if>
+            <if test="custIndustory !=null and custIndustory != ''">
+                AND cust_industry = #{custIndustory}
+            </if>
+            <if test="custLevel !=null and custLevel != ''">
+                AND cust_level = #{custLevel}
+            </if>
+        </where>
+    </sql>
 
-    <select id="getCustomerList" resultType="org.javemos.ssmcrud.pojo.Customer">
+    <select id="getCustomerList" parameterType="org.javemos.ssmcrud.utils.QueryVo" resultType="org.javemos.ssmcrud.pojo.Customer">
         SELECT
             a.cust_id,
             a.cust_name,
@@ -21,9 +37,10 @@
             a.cust_createtime
         FROM
             customer a
-            LEFT JOIN base_dict b ON a.cust_source = b.dict_id
-            LEFT JOIN base_dict c ON a.cust_industry = c.dict_id
-            LEFT JOIN base_dict d ON a.cust_level = d.dict_id
+        LEFT JOIN base_dict b ON a.cust_source = b.dict_id
+        LEFT JOIN base_dict c ON a.cust_industry = c.dict_id
+        LEFT JOIN base_dict d ON a.cust_level = d.dict_id
+        <include refid="customer_list_where"/>
     </select>
     
     <select id="getCustomerById" resultType="org.javemos.ssmcrud.pojo.Customer" parameterType="long">
