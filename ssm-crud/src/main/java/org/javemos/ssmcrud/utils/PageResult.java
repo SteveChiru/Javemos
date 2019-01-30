@@ -7,11 +7,21 @@ import java.util.List;
  */
 public class PageResult {
 	private long total;
+	private long pages;
 	private List rows;
 
-	public PageResult(long total, List rows) {
+	public PageResult(long total,long pages, List rows) {
 		this.total = total;
+		this.pages = pages;
 		this.rows = rows;
+	}
+
+	public long getPages() {
+		return pages;
+	}
+
+	public void setPages(long pages) {
+		this.pages = pages;
 	}
 
 	public long getTotal() {

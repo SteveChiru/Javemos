@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<>
     <meta charset="UTF-8">
     <title>CRM-客户关系管理</title>
 
@@ -52,6 +51,10 @@
             </table>
         </div>
     </div>
+    <hr>
+
+    <!--分页展示-->
+    <div id="pageDiv" style="text-align: right"><ul id="pageLimit"></ul></div>
 
     <!--修改对话框-->
     <div class="modal fade" id="customerEditDialog" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
@@ -124,8 +127,9 @@
 
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-paginator.min.js"></script>
     <script type="text/javascript">
+        var dataPerPage = 5;
         //加载初始化的字典数据到下拉列表
         function loadDictData() {
             $.ajax({
@@ -163,12 +167,12 @@
             $.ajax({
                 type:"get",
                 url:"http://localhost:8080/customer/list.action",
-                data:{"page":1,"rows":5},
+                data:{"page":1,"rows":dataPerPage},
                 success:function (data) {
                     //alert("获得用户信息待处理");
                     var customers = data.rows;
                     for (var i=0;i<customers.length;i++){
-                        $("#listcustomer").append("<tr>" +
+                        $("#listcustomer tbody").append("<tr>" +
                             "<td>"+customers[i].cust_id+"</td>" +
                             "<td>"+customers[i].cust_name+"</td>" +
                             "<td>"+customers[i].cust_source+"</td>" +
@@ -219,16 +223,73 @@
 
         <!--删除用户信息-->
         function deleteCustomer(id){
-            $.post("http://localhost:8080/customer/delete.action",{"id":id},function(data){
-                alert("客户信息删除成功！");
-                window.location.reload();
+            if (confirm("确定要删除该用户信息？")){
+                $.post("http://localhost:8080/customer/delete.action",{"id":id},function(data){
+                    alert("客户信息删除成功！");
+                    window.location.reload();
+                });
+            }
+        }
+
+        function loadPage(){
+            $.post("http://localhost:8080/customer/list.action",{"page":1,"rows":dataPerPage},function(callback){
+                var pagetotal = callback.pages
+                $('#pageLimit').bootstrapPaginator({
+                    currentPage: 1,//当前的请求页面。
+                    totalPages: pagetotal,//一共多少页。
+                    size:"normal",//应该是页眉的大小。
+                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                    alignment:"right",
+                    numberOfPages:dataPerPage,//一页列出多少数据。
+                    itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                        switch (type) {
+                            case "first": return "首页";
+                            case "prev": return "上一页";
+                            case "next": return "下一页";
+                            case "last": return "末页";
+                            case "page": return page;
+                        }
+                    },
+                    onPageClicked:function (event,originalEvent,type,page) {
+                        $.ajax({
+                            url:"http://localhost:8080/customer/list.action",
+                            type:'POST',
+                            data:{'page':page,'rows':dataPerPage},
+                            dataType:'JSON',
+                            success:function (callback) {
+                                $("#listcustomer tbody").empty();
+                                var customers = callback.rows;
+                                for (var i=0;i<customers.length;i++){
+                                    $("#listcustomer tbody").append("<tr>" +
+                                        "<td>"+customers[i].cust_id+"</td>" +
+                                        "<td>"+customers[i].cust_name+"</td>" +
+                                        "<td>"+customers[i].cust_source+"</td>" +
+                                        "<td>"+customers[i].cust_industry+"</td>" +
+                                        "<td>"+customers[i].cust_level+"</td>" +
+                                        "<td>"+customers[i].cust_phone+"</td>" +
+                                        "<td>"+customers[i].cust_mobile+"</td>" +
+                                        "<td>"+customers[i].cust_createtime+"</td>" +
+                                        '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
+                                        '<button class="btn btn-primary btn-lg" onclick="deleteCustomer('+customers[i].cust_id+')">删除</button></td>' +
+                                        "</tr>")
+                                }
+                                $('#last_page').text(pagetotal);
+                            }
+                        })
+                    }
+                });
             });
+
+
+            var pagetotal = getPageTotal();
+
         }
 
         //页面加载完要执行的方法
         $(function () {
             loadDictData();
             listCustomers();
+            loadPage();
         });
 
     </script>
