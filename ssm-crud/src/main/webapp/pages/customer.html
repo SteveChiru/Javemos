@@ -178,7 +178,7 @@
                             "<td>"+customers[i].cust_mobile+"</td>" +
                             "<td>"+customers[i].cust_createtime+"</td>" +
                             '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
-                            '<button class="btn btn-primary btn-lg" >删除</button></td>' +
+                            '<button class="btn btn-primary btn-lg" onclick="deleteCustomer('+customers[i].cust_id+')">删除</button></td>' +
                             "</tr>")
                     }
 
@@ -213,6 +213,14 @@
             // alert($("#edit_customer_form").serialize());
             $.post("http://localhost:8080/customer/update.action",$("#edit_customer_form").serialize(),function(data){
                 alert("客户信息更新成功！");
+                window.location.reload();
+            });
+        }
+
+        <!--删除用户信息-->
+        function deleteCustomer(id){
+            $.post("http://localhost:8080/customer/delete.action",{"id":id},function(data){
+                alert("客户信息删除成功！");
                 window.location.reload();
             });
         }

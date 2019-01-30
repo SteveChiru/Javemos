@@ -44,4 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDao.updateCustomer(customer);
 	}
 
+	@Override
+	public void deleteCustomer(Long id) {
+		logger.info("进入服务层-CustomerServiceImpl-deleteCustomer方法");
+		customerDao.deleteCustomer(id);
+	}
+
 }

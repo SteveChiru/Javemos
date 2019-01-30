@@ -57,4 +57,12 @@
         </set>
         WHERE cust_id=#{cust_id}
     </update>
+
+    <delete id="deleteCustomer" parameterType="long">
+        DELETE
+        FROM
+            customer
+        WHERE
+            cust_id = #{id}
+    </delete>
 </mapper>

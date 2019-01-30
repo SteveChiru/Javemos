@@ -41,6 +41,14 @@ public class CustomerController {
 	public String updateCustomer(Customer customer){
     	logger.info("进入CustomerController中的updateController方法");
     	customerService.updateCustomer(customer);
-    	return "OK";
+    	return "TMD";
+	}
+
+	@RequestMapping(value = "/customer/delete",method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteCustomer(Long id){
+    	logger.info("进入Controller-deleteCustomer方法");
+		customerService.deleteCustomer(id);
+    	return "TMD";
 	}
 }
