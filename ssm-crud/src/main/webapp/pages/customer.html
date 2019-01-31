@@ -191,7 +191,7 @@
         <!--删除用户信息-->
         function deleteCustomer(id){
             if (confirm("确定要删除该用户信息？")){
-                $.post("http://localhost:8080/customer/delete.action",{"id":id},function(){
+                $.get("http://localhost:8080/customer/delete.action",{"id":id},function(){
                     alert("客户信息删除成功！");
                     window.location.reload();
                 });
