@@ -24,9 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public PageResult getCustomerList(QueryVo queryVo) {
 		logger.info("进入服务层-CustomerServiceImpl-getCustomerList方法");
-		PageHelper.startPage(queryVo.getPage(),queryVo.getRows());
+		PageHelper.startPage(queryVo.getPage(),queryVo.getSize());
 		Page<Customer> page = (Page<Customer>) customerDao.getCustomerList(queryVo);
-		return new PageResult(page.getTotal(),page.getPages(),page.getResult());
+		return new PageResult(page.getTotal(), page.getPages(),page.getPageSize(),page.getResult());
 	}
 
 	@Override

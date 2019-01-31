@@ -5,7 +5,7 @@ package org.javemos.ssmcrud.utils;
  */
 public class QueryVo {
 	private Integer page=1;
-	private Integer rows=5;
+	private Integer size=5;
 	private String custName;
 	private String custSource;
 	private String custIndustory;
@@ -19,12 +19,12 @@ public class QueryVo {
 		this.page = page;
 	}
 
-	public Integer getRows() {
-		return rows;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setRows(Integer rows) {
-		this.rows = rows;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
 	public String getCustName() {
@@ -63,7 +63,7 @@ public class QueryVo {
 	public String toString() {
 		return "QueryVo{" +
 				"page=" + page +
-				", rows=" + rows +
+				", size=" + size +
 				", custName='" + custName + '\'' +
 				", custSource='" + custSource + '\'' +
 				", custIndustory='" + custIndustory + '\'' +

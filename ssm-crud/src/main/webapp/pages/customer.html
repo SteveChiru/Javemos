@@ -200,9 +200,11 @@
 
         <!--添加分页功能-->
         function loadPage(){
-            var dataPerPage = 5;
-            $.post("http://localhost:8080/customer/list.action",{"page":1,"rows":dataPerPage},function(callback){
+            // var dataPerPage = 5;
+            $.post("http://localhost:8080/customer/list.action",function(callback){
                 var pagetotal = callback.pages
+                var dataPerPage = callback.rows
+                alert(dataPerPage);
                 $('#pageLimit').bootstrapPaginator({
                     currentPage: 1,//当前的请求页面。
                     totalPages: pagetotal,//一共多少页。
