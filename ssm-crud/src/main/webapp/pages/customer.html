@@ -198,20 +198,38 @@
             }
         }
 
+        //展示在table中展示用户信息
+        function listCustomers(data) {
+            $("#listcustomer tbody").empty();
+            var customers = data.rows;
+            for (var i=0;i<customers.length;i++){
+                $("#listcustomer tbody").append("<tr>" +
+                    "<td>"+customers[i].cust_id+"</td>" +
+                    "<td>"+customers[i].cust_name+"</td>" +
+                    "<td>"+customers[i].cust_source+"</td>" +
+                    "<td>"+customers[i].cust_industry+"</td>" +
+                    "<td>"+customers[i].cust_level+"</td>" +
+                    "<td>"+customers[i].cust_phone+"</td>" +
+                    "<td>"+customers[i].cust_mobile+"</td>" +
+                    "<td>"+customers[i].cust_createtime+"</td>" +
+                    '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
+                    '<button class="btn btn-primary btn-lg" onclick="deleteCustomer('+customers[i].cust_id+')">删除</button></td>' +
+                    "</tr>")
+            }
+        }
+
         <!--添加分页功能-->
         function loadPage(){
-            // var dataPerPage = 5;
             $.post("http://localhost:8080/customer/list.action",function(callback){
                 var pagetotal = callback.pages
-                var dataPerPage = callback.rows
-                alert(dataPerPage);
+                var pagesize = callback.size;
                 $('#pageLimit').bootstrapPaginator({
                     currentPage: 1,//当前的请求页面。
                     totalPages: pagetotal,//一共多少页。
                     size:"normal",//应该是页眉的大小。
                     bootstrapMajorVersion: 3,//bootstrap的版本要求。
                     alignment:"right",
-                    numberOfPages:dataPerPage,//一页列出多少数据。
+                    numberOfPages:pagesize,//一页列出多少数据。
                     itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
                         switch (type) {
                             case "first": return "首页";
@@ -222,31 +240,11 @@
                         }
                     },
                     onPageClicked:function (event,originalEvent,type,page) {
-                        $.ajax({
-                            url:"http://localhost:8080/customer/list.action",
-                            type:'POST',
-                            data:{'page':page,'rows':dataPerPage},
-                            dataType:'JSON',
-                            success:function (callback) {
-                                $("#listcustomer tbody").empty();
-                                var customers = callback.rows;
-                                for (var i=0;i<customers.length;i++){
-                                    $("#listcustomer tbody").append("<tr>" +
-                                        "<td>"+customers[i].cust_id+"</td>" +
-                                        "<td>"+customers[i].cust_name+"</td>" +
-                                        "<td>"+customers[i].cust_source+"</td>" +
-                                        "<td>"+customers[i].cust_industry+"</td>" +
-                                        "<td>"+customers[i].cust_level+"</td>" +
-                                        "<td>"+customers[i].cust_phone+"</td>" +
-                                        "<td>"+customers[i].cust_mobile+"</td>" +
-                                        "<td>"+customers[i].cust_createtime+"</td>" +
-                                        '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
-                                        '<button class="btn btn-primary btn-lg" onclick="deleteCustomer('+customers[i].cust_id+')">删除</button></td>' +
-                                        "</tr>")
-                                }
-                                $('#last_page').text(pagetotal);
-                            }
-                        })
+                        $.get("http://localhost:8080/customer/list.action",{"page":page},function (callback) {
+                            listCustomers(callback);
+                            $('#last_page').text(pagetotal);
+                        });
+
                     }
                 });
             });
@@ -255,22 +253,7 @@
         //点击查询按钮
         function queryVoCustomer(){
             $.post("http://localhost:8080/customer/list.action",$("#queryVoForm").serialize(),function(callback){
-                $("#listcustomer tbody").empty();
-                var customers = callback.rows;
-                for (var i=0;i<customers.length;i++){
-                    $("#listcustomer tbody").append("<tr>" +
-                        "<td>"+customers[i].cust_id+"</td>" +
-                        "<td>"+customers[i].cust_name+"</td>" +
-                        "<td>"+customers[i].cust_source+"</td>" +
-                        "<td>"+customers[i].cust_industry+"</td>" +
-                        "<td>"+customers[i].cust_level+"</td>" +
-                        "<td>"+customers[i].cust_phone+"</td>" +
-                        "<td>"+customers[i].cust_mobile+"</td>" +
-                        "<td>"+customers[i].cust_createtime+"</td>" +
-                        '<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#customerEditDialog" onclick="editCustomer('+customers[i].cust_id+')">修改</button>&nbsp&nbsp' +
-                        '<button class="btn btn-primary btn-lg" onclick="deleteCustomer('+customers[i].cust_id+')">删除</button></td>' +
-                        "</tr>")
-                }
+                listCustomers(callback);
             });
         }
 
