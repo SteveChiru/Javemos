@@ -45,7 +45,7 @@ public class CustomerController {
     	return "TMD";
 	}
 
-	@RequestMapping(value = "/customer/delete",method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/delete")
 	@ResponseBody
 	public String deleteCustomer(Long id){
     	logger.info("进入Controller-deleteCustomer方法");

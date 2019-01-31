@@ -5,13 +5,17 @@
 
     <link rel="stylesheet"  href="../css/bootstrap.min.css">
     <link rel="stylesheet"  href="../css/dataTables.bootstrap.css">
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-paginator.min.js"></script>
 </head>
 <body>
     <!--查询栏-->
     <div>
         <label>客户管理</label>
     </div>
-   <div id="queryVoDiv">
+    <div id="queryVoDiv">
        <form id="queryVoForm">
            <label>客户名称</label>
            <input type="text" id="customerName" name="custName">
@@ -29,8 +33,9 @@
            </select>
            <input type="button" value="查询" onclick="queryVoCustomer()">
        </form>
-   </div>
+    </div>
     <hr>
+
     <!--信息展示栏-->
     <div>
         <div>客户信息列表</div>
@@ -56,7 +61,11 @@
     <hr>
 
     <!--分页展示-->
-    <div id="pageDiv" style="text-align: right"><ul id="pageLimit"></ul></div>
+    <div id="pageDiv" style="text-align: right">
+        <ul id="pageLimit">
+
+        </ul>
+    </div>
 
     <!--修改对话框-->
     <div class="modal fade" id="customerEditDialog" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
@@ -127,68 +136,53 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap-paginator.min.js"></script>
+    <!--js代码-->
     <script type="text/javascript">
-        var dataPerPage = 5;
         //加载初始化的字典数据到下拉列表
         function loadDictData() {
-            $.ajax({
-                type:"get",
-                url:"http://localhost:8080/dict/load.action",
-                success:function (data) {
-                    // alert("加载字典数据");
-                    //添加客户来源数据
-                    var custSourceList = data.custSourceInit;
-                    for (var i = custSourceList.length - 1; i >= 0; i--) {
-                        $("#customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
-                        $("#edit_customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
-                    };
+            $.get("http://localhost:8080/dict/load.action",function (callback) {
+                var custSourceList = callback.custSourceInit;
+                for (var i = custSourceList.length - 1; i >= 0; i--) {
+                    $("#customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
+                    $("#edit_customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
+                };
 
-                    //添加客户行业数据
-                    var custIndustryList = data.custIndustryInit;
-                    for (var i = custIndustryList.length - 1; i >= 0; i--) {
-                        $("#custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
-                        $("#edit_custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
-                    };
+                //添加客户行业数据
+                var custIndustryList = callback.custIndustryInit;
+                for (var i = custIndustryList.length - 1; i >= 0; i--) {
+                    $("#custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
+                    $("#edit_custIndustry").prepend('<option value="'+custIndustryList[i].dict_id+'">'+custIndustryList[i].dict_item_name+'</option>>');
+                };
 
-                    //添加客户等级数据
-                    var custLevelList = data.custLevelInit;
-                    for (var i = custLevelList.length - 1; i >= 0; i--) {
-                        $("#custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
-                        $("#edit_custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
-                    };
-                }
+                //添加客户等级数据
+                var custLevelList = callback.custLevelInit;
+                for (var i = custLevelList.length - 1; i >= 0; i--) {
+                    $("#custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
+                    $("#edit_custLevel").prepend('<option value="'+custLevelList[i].dict_id+'">'+custLevelList[i].dict_item_name+'</option>>');
+                };
             });
         }
 
         <!--点击修改按钮-->
         function editCustomer(id){
-            // alert(id);
-            $.ajax({
-                type:"get",
-                url:"http://localhost:8080/customer/edit.action",
-                data:{"id":id},
-                success:function(data) {
-                    $("#edit_cust_id").val(data.cust_id);
-                    $("#edit_customerName").val(data.cust_name);
-                    $("#edit_customerFrom").val(data.cust_source)
-                    $("#edit_custIndustry").val(data.cust_industry)
-                    $("#edit_custLevel").val(data.cust_level)
-                    $("#edit_linkMan").val(data.cust_linkman);
-                    $("#edit_phone").val(data.cust_phone);
-                    $("#edit_mobile").val(data.cust_mobile);
-                    $("#edit_zipcode").val(data.cust_zipcode);
-                    $("#edit_address").val(data.cust_address);
-                }
+            $.get("http://localhost:8080/customer/edit.action",{"id":id},function (callback) {
+                $("#edit_cust_id").val(callback.cust_id);
+                $("#edit_customerName").val(callback.cust_name);
+                $("#edit_customerFrom").val(callback.cust_source);
+                $("#edit_custIndustry").val(callback.cust_industry);
+                $("#edit_custLevel").val(callback.cust_level);
+                $("#edit_linkMan").val(callback.cust_linkman);
+                $("#edit_phone").val(callback.cust_phone);
+                $("#edit_mobile").val(callback.cust_mobile);
+                $("#edit_zipcode").val(callback.cust_zipcode);
+                $("#edit_address").val(callback.cust_address);
             });
         }
 
         <!--修改完客户信息后保存按钮-->
         function updateCustomer(){
             // alert($("#edit_customer_form").serialize());
-            $.post("http://localhost:8080/customer/update.action",$("#edit_customer_form").serialize(),function(data){
+            $.post("http://localhost:8080/customer/update.action",$("#edit_customer_form").serialize(),function(){
                 alert("客户信息更新成功！");
                 window.location.reload();
             });
@@ -197,7 +191,7 @@
         <!--删除用户信息-->
         function deleteCustomer(id){
             if (confirm("确定要删除该用户信息？")){
-                $.post("http://localhost:8080/customer/delete.action",{"id":id},function(data){
+                $.get("http://localhost:8080/customer/delete.action",{"id":id},function(){
                     alert("客户信息删除成功！");
                     window.location.reload();
                 });
@@ -206,6 +200,7 @@
 
         <!--添加分页功能-->
         function loadPage(){
+            var dataPerPage = 5;
             $.post("http://localhost:8080/customer/list.action",{"page":1,"rows":dataPerPage},function(callback){
                 var pagetotal = callback.pages
                 $('#pageLimit').bootstrapPaginator({
