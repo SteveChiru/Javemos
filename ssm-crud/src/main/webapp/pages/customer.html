@@ -145,9 +145,17 @@
 
     <!--js代码-->
     <script type="text/javascript">
+        function getLoginUrl() {
+            var pathArray = window.location.pathname.split('/');
+            var secondLevelLocation = pathArray[1];
+            var loginUrl = window.location.protocol + "//"  + window.location.host + "/"+ secondLevelLocation;
+            return loginUrl;
+        }
+
+        var loginUrl = getLoginUrl();   //定义一个标识绝对路径的全局变量
         //加载初始化的字典数据到下拉列表
         function loadDictData() {
-            $.get("http://localhost:8080/dict/load.action",function (callback) {
+            $.get(loginUrl+"/dict/load.action",function (callback) {
                 var custSourceList = callback.custSourceInit;
                 for (var i = custSourceList.length - 1; i >= 0; i--) {
                     $("#customerFrom").prepend('<option value="'+custSourceList[i].dict_id+'">'+custSourceList[i].dict_item_name+'</option>>');
@@ -172,7 +180,7 @@
 
         <!--点击修改按钮-->
         function editCustomer(id){
-            $.get("http://localhost:8080/customer/edit.action",{"id":id},function (callback) {
+            $.get(loginUrl+"/customer/edit.action",{"id":id},function (callback) {
                 $("#edit_cust_id").val(callback.cust_id);
                 $("#edit_customerName").val(callback.cust_name);
                 $("#edit_customerFrom").val(callback.cust_source);
@@ -189,7 +197,7 @@
         <!--修改完客户信息后保存按钮-->
         function updateCustomer(){
             // alert($("#edit_customer_form").serialize());
-            $.post("http://localhost:8080/customer/update.action",$("#edit_customer_form").serialize(),function(){
+            $.post(loginUrl+"/customer/update.action",$("#edit_customer_form").serialize(),function(){
                 alert("客户信息更新成功！");
                 window.location.reload();
             });
@@ -198,7 +206,7 @@
         <!--删除用户信息-->
         function deleteCustomer(id){
             if (confirm("确定要删除该用户信息？")){
-                $.get("http://localhost:8080/customer/delete.action",{"id":id},function(){
+                $.get(loginUrl+"/customer/delete.action",{"id":id},function(){
                     alert("客户信息删除成功！");
                     window.location.reload();
                 });
@@ -227,7 +235,7 @@
 
         <!--添加分页功能-->
         function loadPage(){
-            $.post("http://localhost:8080/customer/list.action",function(callback){
+            $.post(loginUrl+"/customer/list.action",function(callback){
                 var pagetotal = callback.pages
                 var pagesize = callback.size;
                 $('#pageLimit').bootstrapPaginator({
@@ -247,7 +255,7 @@
                         }
                     },
                     onPageClicked:function (event,originalEvent,type,page) {
-                        $.get("http://localhost:8080/customer/list.action",{"page":page},function (callback) {
+                        $.get(loginUrl+"/customer/list.action",{"page":page},function (callback) {
                             listCustomers(callback);
                             $('#last_page').text(pagetotal);
                         });
@@ -259,7 +267,7 @@
 
         //点击查询按钮
         function queryVoCustomer(){
-            $.post("http://localhost:8080/customer/list.action",$("#queryVoForm").serialize(),function(callback){
+            $.post(loginUrl+"/customer/list.action",$("#queryVoForm").serialize(),function(callback){
                 listCustomers(callback);
             });
         }
