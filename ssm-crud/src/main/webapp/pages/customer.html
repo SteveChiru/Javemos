@@ -147,9 +147,9 @@
     <script type="text/javascript">
         function getLoginUrl() {
             var pathArray = window.location.pathname.split('/');
-            // var secondLevelLocation = pathArray[1];
-            //var loginUrl = window.location.protocol + "//"  + window.location.host + "/"+ secondLevelLocation;
-            var loginUrl = window.location.protocol + "//"  + window.location.host;
+            var secondLevelLocation = pathArray[1];
+            var loginUrl = window.location.protocol + "//"  + window.location.host + "/"+ secondLevelLocation;
+            //var loginUrl = window.location.protocol + "//"  + window.location.host;
             return loginUrl;
         }
 
