@@ -48,5 +48,4 @@ hs_err_pid*
 *.iml
 
 # database configuration
-*/src/main/resources/c3p0-config.xml
 */src/main/resources/jdbc.properties
