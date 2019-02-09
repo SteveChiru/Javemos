@@ -47,4 +47,6 @@ hs_err_pid*
 
 *.iml
 
-
+# database configuration
+/ssm-crud/src/main/resources/applicationContext-dao.xml
+/ssm-crud/src/main/resources/jdbc.properties
