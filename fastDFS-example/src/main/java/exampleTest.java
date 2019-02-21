@@ -13,7 +13,7 @@ public class exampleTest {
 			TrackerServer trackerServer = trackerClient.getConnection();
 			StorageServer storageServer = null;
 			StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-			String[] strings = storageClient.upload_file("C:\\Users\\cqr15\\Desktop\\dog.jpg", "jpg", null);
+			String[] strings = storageClient.upload_file("C:\\Users\\cqr15\\Desktop\\JG.jpg", "jpg", null);
 			for (String string: strings){
 				System.out.println(string);
 			}
