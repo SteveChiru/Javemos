@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>复利图</title>
+
+    <!-- 引入echarts -->
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+   <div id="container" style="height: 100%"></div>
+   <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById("container"));
+        var option = {
+            title: {
+                text: '复利图'
+            },
+            legend: {
+                data:['5%','10%','15%','20%','25%','30%']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['0','5','10','15','20','25','30','35','40','45','50']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name:'5%',
+                    type:'line',
+                    data:[1.00,1.28,1.63,2.08,2.65,3.39,4.32,5.52,7.04,8.99,11.47]
+                },
+                {
+                    name:'10%',
+                    type:'line',
+                    data:[1.00,1.61,2.59,4.18,6.73,10.83,17.45,28.10,45.26,72.89,117.39]
+                },
+                {
+                    name:'15%',
+                    type:'line',
+                    data:[1.00,2.01,4.05,8.14,16.37,32.92,66.21,133.18,267.86,538.77,1083.66]
+                },
+                {
+                    name:'20%',
+                    type:'line',
+                    data:[1.00,2.49,6.19,15.41,38.34,95.40,237.38,590.67,1469.77,3657.26,9100.44]
+                },
+                {
+                    name:'25%',
+                    type:'line',
+                    data:[1.00,3.05,9.31,28.42,86.74,264.70,807.79,2465.19,7523.16,22958.87,70064.92]
+                },
+                {
+                    name:'30%',
+                    type:'line',
+                    data:[1.00,3.71,13.79,51.19,190.05,705.64,2620.00,9727.86,36118.86,134106.82,497929.22]
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+   </script>
+</body>
+</html>
