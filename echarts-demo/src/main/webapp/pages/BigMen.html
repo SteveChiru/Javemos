@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>复利图</title>
+
+    <!-- 引入echarts -->
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+   <div id="container" style="height: 100%"></div>
+   <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById("container"));
+        var option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data:['年复利（%）','年数','累计回报率']
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['格雷厄姆','巴菲特','涅夫','彼得林奇','卡拉曼','邓普顿','波顿','戴维斯','史文森','西蒙斯','王亚伟','罗伯逊','索罗斯']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'年复利（%）',
+                    type:'bar',
+                    data:[20,20.3,13.8,29,19,13.5,20.3,23,16.1,35,37.4,31.7,20]
+                },
+                {
+                    name:'年数',
+                    type:'bar',
+                    data:[30, 46, 31, 13, 27, 0, 28,47,24,21,7.5,18,41]
+                },
+                {
+                    name:'累计回报率',
+                    type:'bar',
+                    data:[237.3, 4909, 55, 27.4, 109.6, 0, 176.8,18000,36,545.8,10.67]
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+   </script>
+</body>
+</html>

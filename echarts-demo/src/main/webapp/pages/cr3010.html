@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>复利图</title>
+
+    <!-- 引入echarts -->
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById("container"));
+    var option = {
+        title: {
+            text: '复利图'
+        },
+        legend: {
+            data:['5%','10%','15%','20%','25%','30%']
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0','5','10']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'5%',
+                type:'line',
+                data:[1.00,1.28,1.63]
+            },
+            {
+                name:'10%',
+                type:'line',
+                data:[1.00,1.61,2.59]
+            },
+            {
+                name:'15%',
+                type:'line',
+                data:[1.00,2.01,4.05]
+            },
+            {
+                name:'20%',
+                type:'line',
+                data:[1.00,2.49,6.19]
+            },
+            {
+                name:'25%',
+                type:'line',
+                data:[1.00,3.05,9.31]
+            },
+            {
+                name:'30%',
+                type:'line',
+                data:[1.00,3.71,13.79]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>
