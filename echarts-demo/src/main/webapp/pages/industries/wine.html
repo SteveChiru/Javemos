@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>白酒</title>
+
+    <!-- 引入echarts -->
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+   <div id="container" style="height: 100%"></div>
+   <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById("container"));
+        var option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data:['市值','股价','市盈率(PE)','市净率(PB)','净资产收益率(ROE)']
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data :['贵州茅台','五粮液','洋河股份','泸州老窖','古井贡酒','山西汾酒','顺鑫农业','口子窖','今世缘','水井坊','迎驾贡酒','老白干酒','舍得酒业','伊力特','酒鬼酒','青青稞酒','金徽酒','金种子酒']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'市值',
+                    type:'bar',
+                    data:[11318,3771,1791,999,516,489,329,323,321,226,143,128,105,87,80,59,56,50]
+                },
+                {
+                    name:'股价',
+                    type:'bar',
+                    data:[906.28,98.70,119.36,68.93,102.12,57.25,57.13,53.67,25.92,46.44,18.13,18.69,31.28,19.87,24.82,13.24,15.45,7.62]
+                },
+                {
+                    name:'市盈率(PE)',
+                    type:'bar',
+                    data:[32.13,28.17,19.07,27.27,30.85,28.86,44.26,21.19,23.40,36.54,21.57,39.21,30.67,22.52,36.07,51.20,21.59,2304.71]
+                },
+                {
+                    name:'市净率(PB)',
+                    type:'bar',
+                    data:[10.04,5.93,5.32,6.16,7.21,8.12,4.91,5.58,5.37,12.96,3.53,4.37,4.17,3.48,3.65,2.48,2.79,1.78]
+                },
+                {
+                    name:'净资产收益率(ROE)',
+                    type:'bar',
+                    data:[31.25,21.05,27.90,22.59,23.37,28.14,11.09,26.33,22.95,35.47,16.37,11.15,13.60,15.45,10.12,4.84,12.92,0.08]
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+   </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package org.echarts.producedata;
 
+import org.junit.Test;
+
 /**
  * @Description:
  */
@@ -23,5 +25,32 @@ public class ProduceData {
 			}
 			System.out.println("复利利率是"+cr[i]+"时的数据为"+data);
 		}
+	}
+
+	/**
+	 * 生产净资产收益率数据
+	 */
+	@Test
+	public void produceRoe(){
+		//市盈率PE
+		double[] pe = {32.13,28.17,19.07,27.27,30.85,28.86,44.26,21.19,23.40,36.54,21.57,39.21,30.67,22.52,36.07,51.20,21.59,2304.71};
+		//市净率PB
+		double[] pb = {10.04,5.93,5.32,6.16,7.21,8.12,4.91,5.58,5.37,12.96,3.53,4.37,4.17,3.48,3.65,2.48,2.79,1.78};
+		//净资产收益率ROE
+		String roe = new String();
+		//判断pe的个数和pb的个数是一致的
+		if (pe.length == pb.length){
+			for (int i=0;i<pe.length;i++){
+				if (i==0){
+					roe = "["+String.format("%.2f",pb[i]/pe[i]*100).toString()+",";
+				}else if (i==pe.length - 1){
+					roe += String.format("%.2f",pb[i]/pe[i]*100).toString()+"]";
+				}else {
+					roe += String.format("%.2f",pb[i]/pe[i]*100).toString()+",";
+				}
+			}
+		}
+
+		System.out.println("净资产收益率ROE是"+roe);
 	}
 }

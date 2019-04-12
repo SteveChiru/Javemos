@@ -11,10 +11,22 @@
     <packaging>war</packaging>
 
     <properties>
+        <junit.version>4.12</junit.version>
+
         <!--plugins version-->
         <maven-compiler.version>3.2</maven-compiler.version>
         <tomcat7-maven.version>2.2</tomcat7-maven.version>
     </properties>
+
+    <dependencies>
+        <!--Junit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
